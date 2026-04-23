@@ -1,9 +1,9 @@
 class GogSafe < Formula
   desc "Google Workspace CLI with agent-safe profile (no send/delete/share)"
   homepage "https://github.com/drewburchfield/gogcli-safe"
-  url "https://github.com/drewburchfield/gogcli-safe/archive/8c8ae9ffbdb4d8a422ea719eb039281b3e402d9b.tar.gz"
-  version "0.12.0-safe.1"
-  sha256 "1a82a69b4075be915c4d853e984b84f70b8826b4b8c14756e4ba957173f88ed1"
+  url "https://github.com/drewburchfield/gogcli-safe/archive/7a834d5ed28e4264093d6b62587ddcedca58d77b.tar.gz"
+  version "0.13.0-safe.1"
+  sha256 "91c6dc769f289576d44cd5e43c753f2345563b42d60ef0402030d41ca8b3fba1"
   license "MIT"
 
   depends_on "go" => :build
@@ -14,7 +14,7 @@ class GogSafe < Formula
     # but blocks send, delete, share, and admin commands.
     system "go", "run", "./cmd/gen-safety", "--strict", "safety-profiles/agent-safe.yaml"
 
-    commit = "8c8ae9ffbdb4"
+    commit = "7a834d5ed28e"
     ldflags = %W[
       -X github.com/steipete/gogcli/internal/cmd.version=#{version}
       -X github.com/steipete/gogcli/internal/cmd.commit=#{commit}
