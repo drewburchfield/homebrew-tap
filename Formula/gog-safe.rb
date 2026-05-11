@@ -1,20 +1,22 @@
 class GogSafe < Formula
   desc "Google Workspace CLI with agent-safe profile (no send/delete/share)"
   homepage "https://github.com/drewburchfield/gogcli-safe"
-  url "https://github.com/drewburchfield/gogcli-safe/archive/7a834d5ed28e4264093d6b62587ddcedca58d77b.tar.gz"
-  version "0.13.0-safe.1"
-  sha256 "91c6dc769f289576d44cd5e43c753f2345563b42d60ef0402030d41ca8b3fba1"
+  url "https://github.com/drewburchfield/gogcli-safe/archive/refs/tags/v0.14.0-safe.1.tar.gz"
+  version "0.14.0-safe.1"
+  sha256 "ac11986ca724350b7a20e35d078e6a51cfcec44257f2318d2448d76d6cceb394"
   license "MIT"
 
   depends_on "go" => :build
 
   def install
-    # Generate trimmed command structs from the agent-safe profile.
-    # This profile allows read + draft + archive + label operations
-    # but blocks send, delete, share, and admin commands.
-    system "go", "run", "./cmd/gen-safety", "--strict", "safety-profiles/agent-safe.yaml"
+    # Bake the curated agent-safe policy into the binary via upstream's
+    # bake-safety-profile tool. Disabled commands are absent from --help
+    # and rejected at the kong parser layer with a profile-name diagnostic.
+    system "go", "run", "./cmd/bake-safety-profile",
+           "safety-profiles/agent-safe.yaml",
+           "internal/cmd/safety_profile_baked_gen.go"
 
-    commit = "7a834d5ed28e"
+    commit = "17fc9db50d6a"
     ldflags = %W[
       -X github.com/steipete/gogcli/internal/cmd.version=#{version}
       -X github.com/steipete/gogcli/internal/cmd.commit=#{commit}
@@ -26,5 +28,7 @@ class GogSafe < Formula
 
   test do
     assert_match "safe", shell_output("#{bin}/gog-safe --version")
+    assert_match "blocked by baked safety profile",
+                 shell_output("#{bin}/gog-safe gmail send --to a@b.c --subject x --body y 2>&1", 1)
   end
 end
