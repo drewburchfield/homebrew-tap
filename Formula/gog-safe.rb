@@ -1,9 +1,9 @@
 class GogSafe < Formula
   desc "Google Workspace CLI with agent-safe profile (no send/delete/share)"
   homepage "https://github.com/drewburchfield/gogcli-safe"
-  url "https://github.com/drewburchfield/gogcli-safe/archive/refs/tags/v0.14.0-safe.1.tar.gz"
-  version "0.14.0-safe.1"
-  sha256 "ac11986ca724350b7a20e35d078e6a51cfcec44257f2318d2448d76d6cceb394"
+  url "https://github.com/drewburchfield/gogcli-safe/archive/refs/tags/v0.14.0-safe.2.tar.gz"
+  version "0.14.0-safe.2"
+  sha256 "59cd9e19c79ae35917485854d904836e89b0fab3045f0905e28b5e508af3f15e"
   license "MIT"
 
   depends_on "go" => :build
@@ -16,7 +16,7 @@ class GogSafe < Formula
            "safety-profiles/agent-safe.yaml",
            "internal/cmd/safety_profile_baked_gen.go"
 
-    commit = "17fc9db50d6a"
+    commit = "89a974557688"
     ldflags = %W[
       -X github.com/steipete/gogcli/internal/cmd.version=#{version}
       -X github.com/steipete/gogcli/internal/cmd.commit=#{commit}
