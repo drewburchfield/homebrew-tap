@@ -1,9 +1,9 @@
 class GogSafe < Formula
   desc "Google Workspace CLI with agent-safe profile (no send/delete/share)"
   homepage "https://github.com/drewburchfield/gogcli-safe"
-  url "https://github.com/drewburchfield/gogcli-safe/archive/refs/tags/v0.14.0-safe.2.tar.gz"
-  version "0.14.0-safe.2"
-  sha256 "59cd9e19c79ae35917485854d904836e89b0fab3045f0905e28b5e508af3f15e"
+  url "https://github.com/drewburchfield/gogcli-safe/archive/refs/tags/v0.21.0-safe.1.tar.gz"
+  version "0.21.0-safe.1"
+  sha256 "702aea04900ce1601bc42e4f0b094835e87bd0e399f7af9d52f68bee9eee7908"
   license "MIT"
 
   depends_on "go" => :build
@@ -16,7 +16,7 @@ class GogSafe < Formula
            "safety-profiles/agent-safe.yaml",
            "internal/cmd/safety_profile_baked_gen.go"
 
-    commit = "89a974557688"
+    commit = "b607c86b1f6d"
     ldflags = %W[
       -X github.com/steipete/gogcli/internal/cmd.version=#{version}
       -X github.com/steipete/gogcli/internal/cmd.commit=#{commit}
@@ -29,6 +29,9 @@ class GogSafe < Formula
   test do
     assert_match "safe", shell_output("#{bin}/gog-safe --version")
     assert_match "blocked by baked safety profile",
-                 shell_output("#{bin}/gog-safe gmail send --to a@b.c --subject x --body y 2>&1", 1)
+                 shell_output("#{bin}/gog-safe gmail send --to a@b.c --subject x --body y 2>&1", 2)
+    # draft delete is allowed in this profile, so it stays visible in --help
+    # (disabled commands are absent); draft send remains blocked.
+    assert_match "delete", shell_output("#{bin}/gog-safe gmail drafts --help 2>&1")
   end
 end
