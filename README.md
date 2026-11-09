@@ -19,3 +19,13 @@ brew install clings
 ```
 
 See [drewburchfield/clings](https://github.com/drewburchfield/clings) for details.
+
+### paperfeed
+
+Scan from an AirScan (eSCL) printer's document feeder to PDF.
+
+```bash
+brew install drewburchfield/tap/paperfeed
+```
+
+See [drewburchfield/paperfeed](https://github.com/drewburchfield/paperfeed) for details.
