@@ -29,3 +29,13 @@ brew install drewburchfield/tap/paperfeed
 ```
 
 See [drewburchfield/paperfeed](https://github.com/drewburchfield/paperfeed) for details.
+
+### churnpaths
+
+Keep one list of regenerable folders (caches, dependencies, build output) and apply it to Spotlight, Time Machine and Backblaze exclusions.
+
+```bash
+brew install drewburchfield/tap/churnpaths
+```
+
+Built from [drewburchfield/churnpaths](https://github.com/drewburchfield/churnpaths), a fork of [phillco/churnpaths](https://github.com/phillco/churnpaths).
